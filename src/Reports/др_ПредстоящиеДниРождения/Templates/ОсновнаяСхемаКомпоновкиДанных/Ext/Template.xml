@@ -36,11 +36,14 @@
 	ДЕНЬ(ФизЛица.ДатаРождения) КАК ЧислоМесяцаРождения
 ИЗ
 	Справочник.ФизическиеЛица КАК ФизЛица
+		ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.ДокументыФизическихЛиц КАК ДокументыФизическихЛиц
+		ПО ФизЛица.Ссылка = ДокументыФизическихЛиц.Физлицо
 ГДЕ
 	НЕ ФизЛица.ЭтоГруппа
 	И ФизЛица.ДатаРождения &lt;&gt; ДАТАВРЕМЯ(1, 1, 1)
 	И НЕ ФизЛица.ПометкаУдаления
-	И МЕСЯЦ(ФизЛица.ДатаРождения) = &amp;НомерМесяца</query>
+	И МЕСЯЦ(ФизЛица.ДатаРождения) = &amp;НомерМесяца
+	И ЕСТЬNULL(ДокументыФизическихЛиц.ЯвляетсяДокументомУдостоверяющимЛичность, ЛОЖЬ) = &amp;ЯвляетсяДокументомУдостоверяющимЛичность</query>
 	</dataSet>
 	<parameter>
 		<name>НомерМесяца</name>
@@ -60,8 +63,22 @@
 		</valueType>
 		<value xsi:type="xs:decimal">0</value>
 		<useRestriction>false</useRestriction>
-		<expression>Месяц(ТекущаяДата())</expression>
 		<denyIncompleteValues>true</denyIncompleteValues>
+		<use>Always</use>
+	</parameter>
+	<parameter>
+		<name>ЯвляетсяДокументомУдостоверяющимЛичность</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Есть документ удостоверяющий личность</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:boolean</v8:Type>
+		</valueType>
+		<value xsi:type="xs:boolean">false</value>
+		<useRestriction>false</useRestriction>
 		<use>Always</use>
 	</parameter>
 	<settingsVariant>
@@ -81,6 +98,11 @@
 					<dcscor:parameter>НомерМесяца</dcscor:parameter>
 					<dcscor:value xsi:type="xs:decimal">0</dcscor:value>
 					<dcsset:userSettingID>20f63110-a776-4c95-8f69-b9fa711ea226</dcsset:userSettingID>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ЯвляетсяДокументомУдостоверяющимЛичность</dcscor:parameter>
+					<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
+					<dcsset:userSettingID>db97e29f-565f-4e6f-b8fa-750b7ac27f67</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:order>
